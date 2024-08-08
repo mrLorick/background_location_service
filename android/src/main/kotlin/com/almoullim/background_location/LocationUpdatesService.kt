@@ -151,21 +151,21 @@ class LocationUpdatesService : Service() {
 
         val filter = IntentFilter()
         filter.addAction(STOP_SERVICE)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            registerReceiver(
-                broadcastReceiver,
-                IntentFilter("com.result.notification").apply {
-                    setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY)
-                    setExported(true)
-                }
-            )
-        } else {
-            registerReceiver(
-                broadcastReceiver,
-                IntentFilter("com.result.notification")
-            )
-        }
-//        registerReceiver(broadcastReceiver, filter)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            registerReceiver(
+//                broadcastReceiver,
+//                IntentFilter("com.result.notification").apply {
+//                    setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY)
+//                    setExported(true)
+//                }
+//            )
+//        } else {
+//            registerReceiver(
+//                broadcastReceiver,
+//                IntentFilter("com.result.notification")
+//            )
+//        }
+        registerReceiver(broadcastReceiver, filter)
 
         updateNotification() // to start the foreground service
     }
