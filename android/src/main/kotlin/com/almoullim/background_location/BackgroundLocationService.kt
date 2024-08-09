@@ -78,10 +78,10 @@ class BackgroundLocationService: MethodChannel.MethodCallHandler, PluginRegistry
         channel.setMethodCallHandler(this)
 
         receiver = MyReceiver()
-        ContextCompat.registerReceiver(context, receiver!!, IntentFilter(LocationUpdatesService.ACTION_BROADCAST), ContextCompat.RECEIVER_EXPORTED)
+//        ContextCompat.registerReceiver(context, receiver!!, IntentFilter(LocationUpdatesService.ACTION_BROADCAST), ContextCompat.RECEIVER_EXPORTED)
 
-//        LocalBroadcastManager.getInstance(context).registerReceiver(receiver!!,
-//                IntentFilter(LocationUpdatesService.ACTION_BROADCAST))
+        LocalBroadcastManager.getInstance(context).registerReceiver(receiver!!,
+                IntentFilter(LocationUpdatesService.ACTION_BROADCAST))
     }
 
     fun onDetachedFromEngine() {
