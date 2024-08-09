@@ -11,6 +11,7 @@ import android.content.IntentFilter
 import android.os.*
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
 //import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest
@@ -98,6 +99,7 @@ class LocationUpdatesService : Service() {
 
     private var mServiceHandler: Handler? = null
 
+    @SuppressLint("WrongConstant")
     override fun onCreate() {
         val googleAPIAvailability = GoogleApiAvailability.getInstance()
             .isGooglePlayServicesAvailable(applicationContext)
@@ -158,7 +160,7 @@ class LocationUpdatesService : Service() {
 //        }
 
         if (Build.VERSION.SDK_INT >= 34) {
-            registerReceiver(broadcastReceiver, filter, ContextCompat.RECEIVER_EXPORTED)
+            registerReceiver(broadcastReceiver, filter, RECEIVER_EXPORTED)
         }else {
             registerReceiver(broadcastReceiver, filter)
         }
