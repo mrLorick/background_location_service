@@ -13,7 +13,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.app.ActivityCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
+//import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 import io.flutter.plugin.common.MethodCall
@@ -76,9 +78,10 @@ class BackgroundLocationService: MethodChannel.MethodCallHandler, PluginRegistry
         channel.setMethodCallHandler(this)
 
         receiver = MyReceiver()
+        ContextCompat.registerReceiver(context, receiver!!, IntentFilter(LocationUpdatesService.ACTION_BROADCAST), ContextCompat.RECEIVER_EXPORTED)
 
-        LocalBroadcastManager.getInstance(context).registerReceiver(receiver!!,
-                IntentFilter(LocationUpdatesService.ACTION_BROADCAST), RECEIVER_EXPORTED)
+//        LocalBroadcastManager.getInstance(context).registerReceiver(receiver!!,
+//                IntentFilter(LocationUpdatesService.ACTION_BROADCAST))
     }
 
     fun onDetachedFromEngine() {
@@ -103,7 +106,7 @@ class BackgroundLocationService: MethodChannel.MethodCallHandler, PluginRegistry
 
     private fun startLocationService(distanceFilter: Double?, forceLocationManager : Boolean?): Int{
         LocalBroadcastManager.getInstance(context!!).registerReceiver(receiver!!,
-                IntentFilter(LocationUpdatesService.ACTION_BROADCAST),RECEIVER_EXPORTED)
+                IntentFilter(LocationUpdatesService.ACTION_BROADCAST))
         if (!bound) {
             val intent = Intent(context, LocationUpdatesService::class.java)
             intent.putExtra("distance_filter", distanceFilter)

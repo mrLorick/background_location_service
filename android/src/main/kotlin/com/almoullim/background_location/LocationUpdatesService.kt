@@ -10,7 +10,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.*
 import androidx.core.app.NotificationCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.core.content.ContextCompat
+//import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.common.*
@@ -149,25 +150,20 @@ class LocationUpdatesService : Service() {
             }
         }
 
-        val filter = IntentFilter()RRF
+        val filter = IntentFilter()
         filter.addAction(STOP_SERVICE)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            registerReceiver(
-//                broadcastReceiver,
-//                IntentFilter("com.result.notification").apply {
-//                    setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY)
-//                    setExported(true)
-//                }
-//            )
-//        } else {
-//            registerReceiver(
-//                broadcastReceiver,
-//                IntentFilter("com.result.notification")
-//            )
-//        }
-        registerReceiver(broadcastReceiver, filter)
 
-        updateNotification() // to start the foreground service
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            registerReceiver(broadcastReceiver, filter, ContextCompat.RECEIVER_EXPORTED)
+//        }
+
+        if (Build.VERSION.SDK_INT >= 34) {
+            registerReceiver(broadcastReceiver, filter, ContextCompat.RECEIVER_EXPORTED)
+        }else {
+            registerReceiver(broadcastReceiver, filter)
+        }
+
+//        updateNotification() // to start the foreground service
     }
 
 
