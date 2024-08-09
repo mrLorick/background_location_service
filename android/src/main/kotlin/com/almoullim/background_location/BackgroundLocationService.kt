@@ -78,7 +78,7 @@ class BackgroundLocationService: MethodChannel.MethodCallHandler, PluginRegistry
         receiver = MyReceiver()
 
         LocalBroadcastManager.getInstance(context).registerReceiver(receiver!!,
-                IntentFilter(LocationUpdatesService.ACTION_BROADCAST))
+                IntentFilter(LocationUpdatesService.ACTION_BROADCAST), RECEIVER_EXPORTED)
     }
 
     fun onDetachedFromEngine() {
@@ -103,7 +103,7 @@ class BackgroundLocationService: MethodChannel.MethodCallHandler, PluginRegistry
 
     private fun startLocationService(distanceFilter: Double?, forceLocationManager : Boolean?): Int{
         LocalBroadcastManager.getInstance(context!!).registerReceiver(receiver!!,
-                IntentFilter(LocationUpdatesService.ACTION_BROADCAST))
+                IntentFilter(LocationUpdatesService.ACTION_BROADCAST),RECEIVER_EXPORTED)
         if (!bound) {
             val intent = Intent(context, LocationUpdatesService::class.java)
             intent.putExtra("distance_filter", distanceFilter)

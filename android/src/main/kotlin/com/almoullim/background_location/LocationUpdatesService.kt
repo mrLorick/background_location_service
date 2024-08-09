@@ -149,7 +149,7 @@ class LocationUpdatesService : Service() {
             }
         }
 
-        val filter = IntentFilter()
+        val filter = IntentFilter()RRF
         filter.addAction(STOP_SERVICE)
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
 //            registerReceiver(
