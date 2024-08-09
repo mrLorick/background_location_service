@@ -2,20 +2,18 @@ package com.almoullim.background_location
 
 import android.annotation.SuppressLint
 import android.app.*
-import android.location.*
-import android.location.LocationListener
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.location.*
+import android.location.LocationListener
 import android.os.*
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.RECEIVER_EXPORTED
-//import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.common.*
+import com.google.android.gms.location.*
 
 class LocationUpdatesService : Service() {
 
@@ -99,7 +97,7 @@ class LocationUpdatesService : Service() {
 
     private var mServiceHandler: Handler? = null
 
-    @SuppressLint("WrongConstant")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         val googleAPIAvailability = GoogleApiAvailability.getInstance()
             .isGooglePlayServicesAvailable(applicationContext)
@@ -160,7 +158,12 @@ class LocationUpdatesService : Service() {
 //        }
 
         if (Build.VERSION.SDK_INT >= 34) {
-            registerReceiver(broadcastReceiver, filter, RECEIVER_EXPORTED)
+            ContextCompat.registerReceiver(
+                applicationContext,
+                broadcastReceiver,
+                filter,
+                ContextCompat.RECEIVER_EXPORTED
+            )
         }else {
             registerReceiver(broadcastReceiver, filter)
         }
