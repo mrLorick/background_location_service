@@ -157,16 +157,12 @@ class LocationUpdatesService : Service() {
 //            registerReceiver(broadcastReceiver, filter, ContextCompat.RECEIVER_EXPORTED)
 //        }
 
-        if (Build.VERSION.SDK_INT >= 34) {
-            ContextCompat.registerReceiver(
-                applicationContext,
-                broadcastReceiver,
-                filter,
-                ContextCompat.RECEIVER_EXPORTED
-            )
-        }else {
-            registerReceiver(broadcastReceiver, filter)
-        }
+        ContextCompat.registerReceiver(
+            applicationContext,
+            broadcastReceiver,
+            filter,
+            ContextCompat.RECEIVER_EXPORTED
+        )
 
 //        updateNotification() // to start the foreground service
     }
